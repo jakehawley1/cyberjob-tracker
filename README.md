@@ -195,3 +195,4 @@ cyberjob-tracker/
 ├── vercel.json                     # Cron job config
 └── .env.local.example              # Environment variable template
 ```
+trigger
