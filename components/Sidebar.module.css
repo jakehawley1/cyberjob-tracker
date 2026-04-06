@@ -1,0 +1,69 @@
+.sidebar {
+  width: 200px;
+  flex-shrink: 0;
+  background: var(--bg);
+  border-right: 0.5px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  padding: 1.25rem 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+}
+
+.logo {
+  font-size: 15px;
+  font-weight: 600;
+  padding: 0 1.25rem 1.25rem;
+  border-bottom: 0.5px solid var(--border);
+  margin-bottom: 0.75rem;
+}
+
+.nav {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 0 0.5rem;
+}
+
+.navBtn {
+  display: block;
+  text-align: left;
+  padding: 8px 12px;
+  border-radius: var(--radius);
+  border: none;
+  background: none;
+  color: var(--text2);
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s;
+}
+.navBtn:hover { background: var(--bg2); color: var(--text); }
+.navActive { background: var(--bg2) !important; color: var(--text) !important; }
+
+.footer {
+  padding: 0.75rem;
+  border-top: 0.5px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.extLink {
+  display: block;
+  text-align: center;
+  font-size: 12px;
+  padding: 5px 12px;
+  border: 0.5px solid var(--border2);
+  border-radius: var(--radius);
+  color: var(--text2);
+  text-decoration: none;
+}
+.extLink:hover { background: var(--bg2); color: var(--text); }
+
+@media (max-width: 700px) {
+  .sidebar { display: none; }
+}

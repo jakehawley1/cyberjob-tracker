@@ -7,6 +7,7 @@ import JobCard from '@/components/JobCard'
 import JobDetail from '@/components/JobDetail'
 import StatsBar from '@/components/StatsBar'
 import MatchFinder from '@/components/MatchFinder'
+import MotivationQuote from '@/components/MotivationQuote'
 import styles from './dashboard.module.css'
 
 type Tab = 'jobs' | 'matches'
@@ -75,103 +76,78 @@ export default function Dashboard() {
   }
 
   return (
-    <div className={styles.layout}>
-      <aside className={styles.sidebar}>
-        <div className={styles.logo}>CyberJob Tracker</div>
-        <nav className={styles.nav}>
-          <button className={`${styles.navBtn} ${tab === 'jobs' ? styles.navActive : ''}`} onClick={() => setTab('jobs')}>
-            All jobs
-          </button>
-          <button className={`${styles.navBtn} ${tab === 'matches' ? styles.navActive : ''}`} onClick={() => setTab('matches')}>
-            Match finder
-          </button>
-          <a href="/analytics" className={styles.navBtn}>
-            Analytics
-          </a>
-          <a href="/resume" className={styles.navBtn}>
-            AI resume tailor
-          </a>
-        </nav>
-        <div className={styles.sidebarFooter}>
-          <a href="https://www.governmentjobs.com" target="_blank" rel="noreferrer" className="btn btn-sm" style={{width:'100%',justifyContent:'center'}}>
-            governmentjobs.com ↗
-          </a>
-          <a href="https://www.usajobs.gov" target="_blank" rel="noreferrer" className="btn btn-sm" style={{width:'100%',justifyContent:'center',marginTop:8}}>
-            USAJobs ↗
-          </a>
-        </div>
-      </aside>
+    <div className={styles.page}>
+      <MotivationQuote />
 
-      <main className={styles.main}>
-        <div className={styles.topbar}>
-          <StatsBar jobs={jobs} />
-          <button className="btn btn-primary btn-sm" onClick={openAdd}>+ Add job</button>
-        </div>
+      <div className={styles.topbar}>
+        <StatsBar jobs={jobs} />
+        <button className="btn btn-primary btn-sm" onClick={openAdd}>+ Add job</button>
+      </div>
 
-        {showForm && (
-          <JobForm
-            job={editJob}
-            onSave={handleSave}
-            onCancel={closeForm}
-          />
-        )}
+      {showForm && (
+        <JobForm job={editJob} onSave={handleSave} onCancel={closeForm} />
+      )}
 
-        {tab === 'jobs' && (
-          <div className={styles.content}>
-            <div className={styles.filters}>
-              <input
-                className={styles.search}
-                placeholder="Search title, org, location, tags..."
-                value={search}
-                onChange={e => setSearch(e.target.value)}
-              />
-              <select value={filterStatus} onChange={e => setFilterStatus(e.target.value)}>
-                <option value="">All statuses</option>
-                <option value="applied">Applied</option>
-                <option value="interview">Interview</option>
-                <option value="finalist">Finalist</option>
-                <option value="offer">Offer</option>
-                <option value="rejected">Rejected</option>
-                <option value="withdrawn">Withdrawn</option>
-                <option value="pending">Pending</option>
-              </select>
-              <select value={filterClearance} onChange={e => setFilterClearance(e.target.value)}>
-                <option value="">Any clearance</option>
-                <option value="none">No clearance</option>
-                <option value="preferred">Clearance preferred</option>
-                <option value="required">Clearance required</option>
-              </select>
-            </div>
+      <div className={styles.tabs}>
+        <button className={`${styles.tab} ${tab === 'jobs' ? styles.tabActive : ''}`} onClick={() => setTab('jobs')}>All jobs</button>
+        <button className={`${styles.tab} ${tab === 'matches' ? styles.tabActive : ''}`} onClick={() => setTab('matches')}>Match finder</button>
+      </div>
 
-            <div className={styles.listDetail}>
-              <div className={styles.list}>
-                {loading && <div className="empty">Loading...</div>}
-                {!loading && filtered.length === 0 && <div className="empty">No jobs yet. Hit "+ Add job" to start tracking.</div>}
-                {filtered.map(j => (
-                  <JobCard
-                    key={j.id}
-                    job={j}
-                    selected={selectedId === j.id}
-                    onClick={() => setSelectedId(selectedId === j.id ? null : j.id)}
-                  />
-                ))}
-              </div>
-              {selected && (
-                <div className={styles.detail}>
-                  <JobDetail
-                    job={selected}
-                    onEdit={openEdit}
-                    onDelete={handleDelete}
-                    onStatusChange={handleStatusChange}
-                  />
-                </div>
-              )}
-            </div>
+      {tab === 'jobs' && (
+        <div className={styles.content}>
+          <div className={styles.filters}>
+            <input
+              className={styles.search}
+              placeholder="Search title, org, location, tags..."
+              value={search}
+              onChange={e => setSearch(e.target.value)}
+            />
+            <select value={filterStatus} onChange={e => setFilterStatus(e.target.value)}>
+              <option value="">All statuses</option>
+              <option value="applied">Applied</option>
+              <option value="interview">Interview</option>
+              <option value="finalist">Finalist</option>
+              <option value="offer">Offer</option>
+              <option value="rejected">Rejected</option>
+              <option value="withdrawn">Withdrawn</option>
+              <option value="pending">Pending</option>
+            </select>
+            <select value={filterClearance} onChange={e => setFilterClearance(e.target.value)}>
+              <option value="">Any clearance</option>
+              <option value="none">No clearance</option>
+              <option value="preferred">Clearance preferred</option>
+              <option value="required">Clearance required</option>
+            </select>
           </div>
-        )}
 
-        {tab === 'matches' && <MatchFinder />}
-      </main>
+          <div className={styles.listDetail}>
+            <div className={styles.list}>
+              {loading && <div className="empty">Loading...</div>}
+              {!loading && filtered.length === 0 && <div className="empty">No jobs yet. Hit "+ Add job" to start tracking.</div>}
+              {filtered.map(j => (
+                <JobCard
+                  key={j.id}
+                  job={j}
+                  selected={selectedId === j.id}
+                  onClick={() => setSelectedId(selectedId === j.id ? null : j.id)}
+                />
+              ))}
+            </div>
+            {selected && (
+              <div className={styles.detail}>
+                <JobDetail
+                  job={selected}
+                  onEdit={openEdit}
+                  onDelete={handleDelete}
+                  onStatusChange={handleStatusChange}
+                />
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {tab === 'matches' && <MatchFinder />}
     </div>
   )
 }

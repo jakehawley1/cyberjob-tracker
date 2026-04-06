@@ -84,3 +84,58 @@
   .grid { grid-template-columns: 1fr; }
   .full { grid-column: 1; }
 }
+
+.pasteSection {
+  border-bottom: 0.5px solid var(--border);
+  padding: 1rem 1.25rem;
+  background: var(--bg2);
+}
+
+.pasteHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.pasteTitle {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--teal);
+}
+
+.pasteToggle {
+  font-size: 12px;
+  color: var(--text3);
+  border: none;
+  background: none;
+  cursor: pointer;
+  text-decoration: underline;
+}
+.pasteToggle:hover { color: var(--text2); }
+
+.pasteHint {
+  font-size: 12px;
+  color: var(--text2);
+  line-height: 1.6;
+  margin-bottom: 8px;
+}
+
+.pasteArea {
+  width: 100%;
+  min-height: 100px;
+  font-size: 13px;
+  padding: 8px 12px;
+  border: 0.5px solid var(--border2);
+  border-radius: var(--radius);
+  background: var(--bg);
+  color: var(--text);
+  resize: vertical;
+  font-family: var(--font-sans);
+}
+
+.pasteBody {
+  display: flex;
+  flex-direction: column;
+}

@@ -11,6 +11,9 @@ export default function JobForm({ job, onSave, onCancel }: {
   onCancel: () => void
 }) {
   const [saving, setSaving] = useState(false)
+  const [parsing, setParsing] = useState(false)
+  const [pasteText, setPasteText] = useState('')
+  const [showPaste, setShowPaste] = useState(!job)
   const [form, setForm] = useState({
     title: job?.title || '',
     org: job?.org || '',
@@ -28,6 +31,37 @@ export default function JobForm({ job, onSave, onCancel }: {
 
   function set(field: string, value: string) {
     setForm(f => ({ ...f, [field]: value }))
+  }
+
+  async function parsePosting() {
+    if (!pasteText.trim()) return
+    setParsing(true)
+    try {
+      const res = await fetch('/api/parse-job', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text: pasteText })
+      })
+      const data = await res.json()
+      if (data.error) throw new Error(data.error)
+      setForm(f => ({
+        ...f,
+        title: data.title || f.title,
+        org: data.org || f.org,
+        location: data.location || f.location,
+        salary: data.salary || f.salary,
+        source: data.source || f.source,
+        clearance: data.clearance || f.clearance,
+        tags: (data.tags || []).join(', ') || f.tags,
+        notes: data.notes || f.notes,
+        url: data.url || f.url,
+      }))
+      setShowPaste(false)
+    } catch (e: unknown) {
+      alert(e instanceof Error ? e.message : 'Failed to parse posting')
+    } finally {
+      setParsing(false)
+    }
   }
 
   async function submit() {
@@ -54,6 +88,41 @@ export default function JobForm({ job, onSave, onCancel }: {
           <div className={styles.title}>{job ? 'Edit job' : 'Add new job'}</div>
           <button className={styles.close} onClick={onCancel}>✕</button>
         </div>
+
+        {/* Paste-to-fill section — shown by default on new jobs */}
+        {!job && (
+          <div className={styles.pasteSection}>
+            <div className={styles.pasteHeader}>
+              <div className={styles.pasteTitle}>
+                ✦ Auto-fill from job posting
+              </div>
+              <button className={styles.pasteToggle} onClick={() => setShowPaste(!showPaste)}>
+                {showPaste ? 'Fill manually instead' : 'Paste job posting instead'}
+              </button>
+            </div>
+            {showPaste && (
+              <div className={styles.pasteBody}>
+                <p className={styles.pasteHint}>
+                  Go to the job posting, select all the text (Cmd+A), copy it (Cmd+C), and paste it below. Claude will extract the title, org, location, salary, tags, and a summary automatically.
+                </p>
+                <textarea
+                  className={styles.pasteArea}
+                  placeholder="Paste the full job posting text here..."
+                  value={pasteText}
+                  onChange={e => setPasteText(e.target.value)}
+                />
+                <button
+                  className="btn btn-primary btn-sm"
+                  onClick={parsePosting}
+                  disabled={parsing || !pasteText.trim()}
+                  style={{ marginTop: 8 }}
+                >
+                  {parsing ? 'Parsing...' : '✦ Auto-fill fields'}
+                </button>
+              </div>
+            )}
+          </div>
+        )}
 
         <div className={styles.grid}>
           <div className={styles.field}>
