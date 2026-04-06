@@ -2,9 +2,10 @@ import { NextRequest, NextResponse } from 'next/server'
 import Anthropic from '@anthropic-ai/sdk'
 import { supabaseAdmin } from '@/lib/supabase'
 
-const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
+export const dynamic = 'force-dynamic'
 
 export async function POST(req: NextRequest) {
+  const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
   const { jobId, resumeText, jdText } = await req.json()
 
   if (!resumeText || !jdText) {
@@ -44,7 +45,6 @@ Respond ONLY with a JSON object in this exact format (no markdown, no backticks)
     const score = Math.min(100, Math.max(0, Math.round(parsed.score)))
     const feedback = parsed.feedback || ''
 
-    // Save score back to job record if jobId provided
     if (jobId) {
       const sb = supabaseAdmin()
       await sb.from('jobs').update({ match_score: score }).eq('id', jobId)

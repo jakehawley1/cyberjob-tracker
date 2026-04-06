@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase'
 
+export const dynamic = 'force-dynamic'
+
 export async function GET() {
   const sb = supabaseAdmin()
   const { data, error } = await sb.from('jobs').select('*').order('created_at', { ascending: false })

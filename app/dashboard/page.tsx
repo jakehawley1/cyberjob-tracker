@@ -23,7 +23,7 @@ export default function Dashboard() {
   const [filterClearance, setFilterClearance] = useState('')
 
   const fetchJobs = useCallback(async () => {
-    const { data } = await supabase
+    const { data } = await supabase()
       .from('jobs')
       .select('*')
       .order('created_at', { ascending: false })
@@ -51,9 +51,9 @@ export default function Dashboard() {
 
   async function handleSave(data: Partial<Job>) {
     if (editJob) {
-      await supabase.from('jobs').update(data).eq('id', editJob.id)
+      await supabase().from('jobs').update(data).eq('id', editJob.id)
     } else {
-      await supabase.from('jobs').insert([data])
+      await supabase().from('jobs').insert([data])
     }
     await fetchJobs()
     closeForm()
@@ -61,7 +61,7 @@ export default function Dashboard() {
 
   async function handleDelete(id: string) {
     if (!confirm('Delete this job entry?')) return
-    await supabase.from('jobs').delete().eq('id', id)
+    await supabase().from('jobs').delete().eq('id', id)
     setSelectedId(null)
     await fetchJobs()
   }
@@ -70,7 +70,7 @@ export default function Dashboard() {
     const job = jobs.find(j => j.id === id)
     if (!job || job.status === status) return
     const timeline = [...(job.timeline || []), { status, date: new Date().toISOString().split('T')[0] }]
-    await supabase.from('jobs').update({ status, timeline }).eq('id', id)
+    await supabase().from('jobs').update({ status, timeline }).eq('id', id)
     await fetchJobs()
   }
 
