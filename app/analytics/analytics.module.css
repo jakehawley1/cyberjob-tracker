@@ -1,0 +1,115 @@
+.page { padding: 1.5rem; max-width: 1200px; }
+.header { margin-bottom: 1.5rem; }
+.title { font-size: 20px; font-weight: 600; margin-bottom: 4px; }
+.subtitle { font-size: 13px; color: var(--text2); }
+.empty { padding: 3rem; text-align: center; color: var(--text2); }
+
+.metricGrid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 1.25rem;
+}
+.metric {
+  background: var(--bg);
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1rem;
+  text-align: center;
+}
+.metricNum { font-size: 28px; font-weight: 700; line-height: 1; margin-bottom: 4px; }
+.metricLabel { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.05em; }
+
+.card {
+  background: var(--bg);
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+.cardTitle { font-size: 13px; font-weight: 600; margin-bottom: 1rem; color: var(--text2); text-transform: uppercase; letter-spacing: 0.04em; }
+
+/* Bar chart */
+.barChart {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 140px;
+  padding-bottom: 24px;
+  position: relative;
+}
+.barCol {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+}
+.barWrap {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  padding: 0 1px;
+}
+.bar {
+  width: 100%;
+  min-height: 2px;
+  border-radius: 2px 2px 0 0;
+  transition: height 0.3s;
+}
+.barVal {
+  font-size: 9px;
+  color: var(--blue);
+  font-weight: 600;
+  margin-top: 2px;
+  line-height: 1;
+}
+.barLabel {
+  font-size: 9px;
+  color: var(--text3);
+  margin-top: 2px;
+  white-space: nowrap;
+  text-align: center;
+}
+
+.twoCol {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+
+/* Status list */
+.statusList { display: flex; flex-direction: column; gap: 8px; margin-bottom: 1rem; }
+.statusRow { display: flex; align-items: center; gap: 10px; font-size: 13px; }
+.statusInfo { display: flex; align-items: center; gap: 6px; width: 80px; flex-shrink: 0; }
+.statusDot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.statusName { font-size: 12px; color: var(--text2); }
+.statusBarWrap { flex: 1; height: 20px; background: var(--bg2); border-radius: 4px; overflow: hidden; }
+.statusBar { height: 100%; border-radius: 4px; transition: width 0.4s; }
+.statusCount { font-size: 13px; font-weight: 600; width: 24px; text-align: right; flex-shrink: 0; }
+
+/* Donut */
+.donutWrap { display: flex; justify-content: center; margin-top: 1rem; }
+.donut { width: 120px; height: 120px; }
+
+/* Source list */
+.sourceList { display: flex; flex-direction: column; gap: 8px; }
+.sourceRow { display: flex; align-items: center; gap: 10px; font-size: 13px; }
+.sourceName { font-size: 12px; color: var(--text2); width: 130px; flex-shrink: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sourceBarWrap { flex: 1; height: 16px; background: var(--bg2); border-radius: 4px; overflow: hidden; }
+.sourceBar { height: 100%; background: var(--blue-bg); border: 1px solid var(--blue); border-radius: 4px; transition: width 0.4s; }
+.sourceCount { font-size: 13px; font-weight: 600; color: var(--text2); width: 24px; text-align: right; }
+
+/* Match scores */
+.scoreList { display: flex; flex-direction: column; gap: 8px; }
+.scoreRow { display: flex; align-items: center; gap: 10px; }
+.scoreJobTitle { font-size: 12px; color: var(--text2); width: 130px; flex-shrink: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.scoreBarWrap { flex: 1; height: 16px; background: var(--bg2); border-radius: 4px; overflow: hidden; }
+.scoreBar { height: 100%; border-radius: 4px; transition: width 0.4s; opacity: 0.7; }
+.scoreVal { font-size: 12px; font-weight: 600; width: 32px; text-align: right; }
+
+@media (max-width: 800px) {
+  .metricGrid { grid-template-columns: repeat(3, 1fr); }
+  .twoCol { grid-template-columns: 1fr; }
+}

@@ -55,9 +55,43 @@
 .tipTitle { font-size: 13px; font-weight: 600; margin-bottom: 5px; }
 .tipBody { font-size: 12px; color: var(--text2); line-height: 1.6; }
 
+.usajobs {
+  background: var(--bg);
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+}
+.usaHeader { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px; flex-wrap: wrap; }
+.usaSearch { display: flex; gap: 8px; align-items: center; }
+.usaSearch input { width: 200px; font-size: 13px; padding: 6px 10px; }
+.usaNotice { font-size: 13px; color: var(--text2); background: var(--bg2); border-radius: var(--radius); padding: 10px 12px; line-height: 1.6; }
+.usaNotice a { color: var(--blue); }
+.usaNotice code { font-family: monospace; font-size: 12px; background: var(--bg3); padding: 1px 5px; border-radius: 4px; }
+.usaEmpty { font-size: 13px; color: var(--text3); padding: 1rem 0; }
+.usaList { display: flex; flex-direction: column; gap: 8px; }
+.usaCard {
+  display: block;
+  background: var(--bg2);
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.75rem 1rem;
+  text-decoration: none;
+  transition: border-color 0.15s;
+}
+.usaCard:hover { border-color: var(--border2); }
+.usaTop { display: flex; justify-content: space-between; gap: 12px; align-items: flex-start; }
+.usaTitle { font-size: 13px; font-weight: 500; color: var(--text); margin-bottom: 2px; }
+.usaMeta { font-size: 12px; color: var(--text2); }
+.usaRight { text-align: right; flex-shrink: 0; }
+.usaSalary { font-size: 12px; font-weight: 500; color: var(--teal); }
+.usaClose { font-size: 11px; color: var(--text3); margin-top: 2px; }
+
 @media (max-width: 700px) {
   .wrap { padding: 1rem; }
   .tipGrid { grid-template-columns: 1fr; }
   .searchesHeader { flex-direction: column; align-items: flex-start; }
   .filterInput { width: 100%; }
+  .usaHeader { flex-direction: column; align-items: flex-start; }
+  .usaSearch { width: 100%; }
+  .usaSearch input { flex: 1; }
 }

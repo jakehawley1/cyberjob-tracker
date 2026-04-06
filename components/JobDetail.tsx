@@ -3,17 +3,22 @@ import { useState } from 'react'
 import type { Job } from '@/lib/supabase'
 import styles from './JobDetail.module.css'
 
-const STATUSES: Job['status'][] = ['applied', 'interview', 'finalist', 'offer', 'rejected', 'withdrawn', 'pending']
-function sl(s: string) {
-  const m: Record<string, string> = { applied: 'Applied', interview: 'Interview', finalist: 'Finalist', offer: 'Offer', rejected: 'Rejected', withdrawn: 'Withdrawn', pending: 'Pending' }
-  return m[s] || s
-}
-function cl(c: string) {
-  return { none: 'Not required', preferred: 'Preferred', required: 'Required' }[c] || c
-}
+const STATUSES: { value: Job['status']; label: string; color: string }[] = [
+  { value: 'applied', label: 'Applied', color: 'blue' },
+  { value: 'interview', label: 'Interview', color: 'teal' },
+  { value: 'finalist', label: 'Finalist', color: 'amber' },
+  { value: 'offer', label: 'Offer', color: 'green' },
+  { value: 'rejected', label: 'Rejected', color: 'red' },
+  { value: 'withdrawn', label: 'Withdrawn', color: 'gray' },
+  { value: 'pending', label: 'Pending', color: 'pink' },
+]
+
 function fd(d: string) {
   if (!d) return '—'
   return new Date(d + 'T12:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+}
+function cl(c: string) {
+  return { none: 'Not required', preferred: 'Preferred', required: 'Required' }[c] || c
 }
 
 export default function JobDetail({ job, onEdit, onDelete, onStatusChange }: {
@@ -44,8 +49,10 @@ export default function JobDetail({ job, onEdit, onDelete, onStatusChange }: {
     }
   }
 
+  const currentStatus = STATUSES.find(s => s.value === job.status)
+
   return (
-    <div className={`card ${styles.panel}`}>
+    <div className={styles.panel}>
       <div className={styles.header}>
         <div>
           <div className={styles.title}>{job.title}</div>
@@ -58,23 +65,28 @@ export default function JobDetail({ job, onEdit, onDelete, onStatusChange }: {
         </div>
       </div>
 
+      <div className={`${styles.currentStatus} ${styles['status_' + job.status]}`}>
+        <div className={styles.currentStatusLabel}>Current status</div>
+        <div className={styles.currentStatusValue}>{currentStatus?.label}</div>
+      </div>
+
       <div className={styles.section}>
-        <div className="label" style={{ marginBottom: 6 }}>Update status</div>
-        <div className={styles.statusRow}>
+        <div className="label" style={{ marginBottom: 8 }}>Update status</div>
+        <div className={styles.statusGrid}>
           {STATUSES.map(s => (
             <button
-              key={s}
-              className={`${styles.sBadge} ${job.status === s ? styles.sCur : ''}`}
-              onClick={() => onStatusChange(job.id, s)}
+              key={s.value}
+              className={`${styles.statusTile} ${styles['tile_' + s.color]} ${job.status === s.value ? styles.statusTileActive : ''}`}
+              onClick={() => onStatusChange(job.id, s.value)}
             >
-              {sl(s)}
+              {s.label}
+              {job.status === s.value && <span className={styles.checkmark}>✓</span>}
             </button>
           ))}
         </div>
       </div>
 
       <div className={styles.grid}>
-        <div className={styles.drow}><div className="label">Status</div><span className={`badge badge-${job.status}`}>{sl(job.status)}</span></div>
         <div className={styles.drow}><div className="label">Applied</div><div>{fd(job.date_applied)}</div></div>
         <div className={styles.drow}><div className="label">Salary</div><div>{job.salary || '—'}</div></div>
         <div className={styles.drow}><div className="label">Source</div><div>{job.source || '—'}</div></div>
@@ -107,7 +119,7 @@ export default function JobDetail({ job, onEdit, onDelete, onStatusChange }: {
               <div key={i} className={styles.tlItem}>
                 <div className={`${styles.tlDot} ${styles['dot_' + t.status]}`} />
                 <div>
-                  <div className={styles.tlStatus}>{sl(t.status)}</div>
+                  <div className={styles.tlStatus}>{STATUSES.find(s => s.value === t.status)?.label || t.status}</div>
                   <div className={styles.tlDate}>{fd(t.date)}</div>
                 </div>
               </div>
@@ -118,7 +130,7 @@ export default function JobDetail({ job, onEdit, onDelete, onStatusChange }: {
 
       <div className={styles.section}>
         <button className="btn btn-sm" onClick={() => setShowScorer(!showScorer)}>
-          {showScorer ? 'Hide' : '✦ Score my resume against this job'}
+          {showScorer ? 'Hide scorer' : '✦ Score my resume against this job'}
         </button>
         {showScorer && (
           <div className={styles.scorer}>

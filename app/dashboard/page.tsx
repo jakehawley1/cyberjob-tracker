@@ -85,6 +85,12 @@ export default function Dashboard() {
           <button className={`${styles.navBtn} ${tab === 'matches' ? styles.navActive : ''}`} onClick={() => setTab('matches')}>
             Match finder
           </button>
+          <a href="/analytics" className={styles.navBtn}>
+            Analytics
+          </a>
+          <a href="/resume" className={styles.navBtn}>
+            AI resume tailor
+          </a>
         </nav>
         <div className={styles.sidebarFooter}>
           <a href="https://www.governmentjobs.com" target="_blank" rel="noreferrer" className="btn btn-sm" style={{width:'100%',justifyContent:'center'}}>

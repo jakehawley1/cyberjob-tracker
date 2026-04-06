@@ -1,6 +1,17 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import styles from './MatchFinder.module.css'
+
+type USAJob = {
+  title: string
+  org: string
+  location: string
+  salary: string
+  url: string
+  closeDate: string
+  openDate: string
+  grade: string
+}
 
 type Search = {
   title: string
@@ -82,6 +93,26 @@ const BOARDS = [
 
 export default function MatchFinder() {
   const [filter, setFilter] = useState('')
+  const [usaJobs, setUsaJobs] = useState<USAJob[]>([])
+  const [usaLoading, setUsaLoading] = useState(false)
+  const [usaKeyword, setUsaKeyword] = useState('cybersecurity compliance')
+  const [usaConfigured, setUsaConfigured] = useState(true)
+
+  async function fetchUSAJobs() {
+    setUsaLoading(true)
+    try {
+      const res = await fetch(`/api/usajobs?keyword=${encodeURIComponent(usaKeyword)}`)
+      const data = await res.json()
+      setUsaConfigured(data.configured)
+      setUsaJobs(data.jobs || [])
+    } catch(e) {
+      console.error(e)
+    } finally {
+      setUsaLoading(false)
+    }
+  }
+
+  useEffect(() => { fetchUSAJobs() }, [])
 
   const shown = SEARCHES.filter(s =>
     !filter || s.tags.some(t => t.toLowerCase().includes(filter.toLowerCase())) ||
@@ -140,6 +171,50 @@ export default function MatchFinder() {
             </div>
           ))}
         </div>
+      </div>
+
+      <div className={styles.usajobs}>
+        <div className={styles.usaHeader}>
+          <div className={styles.sectionTitle}>Live federal jobs — USAJobs</div>
+          <div className={styles.usaSearch}>
+            <input
+              className={styles.filterInput}
+              value={usaKeyword}
+              onChange={e => setUsaKeyword(e.target.value)}
+              onKeyDown={e => e.key === 'Enter' && fetchUSAJobs()}
+              placeholder="Search keyword..."
+            />
+            <button className="btn btn-sm btn-primary" onClick={fetchUSAJobs} disabled={usaLoading}>
+              {usaLoading ? 'Searching...' : 'Search'}
+            </button>
+          </div>
+        </div>
+        {!usaConfigured && (
+          <div className={styles.usaNotice}>
+            To enable live federal job search, register for a free API key at <a href="https://developer.usajobs.gov" target="_blank" rel="noreferrer">developer.usajobs.gov</a> and add <code>USAJOBS_API_KEY</code> and <code>USAJOBS_EMAIL</code> to your Vercel environment variables.
+          </div>
+        )}
+        {usaConfigured && usaJobs.length === 0 && !usaLoading && (
+          <div className={styles.usaEmpty}>No results — try a different keyword.</div>
+        )}
+        {usaJobs.length > 0 && (
+          <div className={styles.usaList}>
+            {usaJobs.map((j, i) => (
+              <a key={i} href={j.url} target="_blank" rel="noreferrer" className={styles.usaCard}>
+                <div className={styles.usaTop}>
+                  <div>
+                    <div className={styles.usaTitle}>{j.title}</div>
+                    <div className={styles.usaMeta}>{j.org} · {j.location}</div>
+                  </div>
+                  <div className={styles.usaRight}>
+                    <div className={styles.usaSalary}>{j.salary}</div>
+                    {j.closeDate && <div className={styles.usaClose}>Closes {j.closeDate}</div>}
+                  </div>
+                </div>
+              </a>
+            ))}
+          </div>
+        )}
       </div>
 
       <div className={styles.tips}>

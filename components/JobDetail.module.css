@@ -1,13 +1,61 @@
-.panel { padding: 1.25rem; }
+.panel { background: var(--bg); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 1.25rem; }
 .header { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; margin-bottom: 1rem; }
 .title { font-size: 15px; font-weight: 600; }
 .subtitle { font-size: 13px; color: var(--text2); margin-top: 2px; }
 .actions { display: flex; gap: 6px; flex-wrap: wrap; flex-shrink: 0; }
+
+.currentStatus {
+  border-radius: var(--radius-lg);
+  padding: 1rem 1.25rem;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.currentStatusLabel { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.7; }
+.currentStatusValue { font-size: 22px; font-weight: 700; }
+
+.status_applied { background: var(--blue-bg); color: var(--blue); }
+.status_interview { background: var(--teal-bg); color: var(--teal); }
+.status_finalist { background: var(--amber-bg); color: var(--amber); }
+.status_offer { background: var(--green-bg); color: var(--green); }
+.status_rejected { background: var(--red-bg); color: var(--red); }
+.status_withdrawn { background: var(--gray-bg); color: var(--gray); }
+.status_pending { background: var(--pink-bg); color: var(--pink); }
+
 .section { margin-bottom: 1rem; }
-.statusRow { display: flex; flex-wrap: wrap; gap: 5px; }
-.sBadge { padding: 3px 10px; font-size: 12px; border-radius: 20px; border: 0.5px solid var(--border2); background: var(--bg2); color: var(--text2); cursor: pointer; }
-.sBadge:hover { border-color: var(--text2); color: var(--text); }
-.sCur { font-weight: 600; border-color: var(--text2); color: var(--text); background: var(--bg3); }
+
+.statusGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+}
+
+.statusTile {
+  padding: 10px 6px;
+  border-radius: var(--radius);
+  border: 1.5px solid transparent;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+  position: relative;
+  background: var(--bg2);
+  color: var(--text2);
+  transition: all 0.12s;
+}
+.statusTile:hover { border-color: var(--border2); color: var(--text); }
+
+.tile_blue:hover, .statusTileActive.tile_blue { background: var(--blue-bg); color: var(--blue); border-color: var(--blue); }
+.tile_teal:hover, .statusTileActive.tile_teal { background: var(--teal-bg); color: var(--teal); border-color: var(--teal); }
+.tile_amber:hover, .statusTileActive.tile_amber { background: var(--amber-bg); color: var(--amber); border-color: var(--amber); }
+.tile_green:hover, .statusTileActive.tile_green { background: var(--green-bg); color: var(--green); border-color: var(--green); }
+.tile_red:hover, .statusTileActive.tile_red { background: var(--red-bg); color: var(--red); border-color: var(--red); }
+.tile_gray:hover, .statusTileActive.tile_gray { background: var(--gray-bg); color: var(--gray); border-color: var(--gray); }
+.tile_pink:hover, .statusTileActive.tile_pink { background: var(--pink-bg); color: var(--pink); border-color: var(--pink); }
+
+.checkmark { display: block; font-size: 10px; margin-top: 2px; }
+
 .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 16px; margin-bottom: 1rem; font-size: 13px; }
 .drow { display: flex; flex-direction: column; gap: 3px; }
 .tags { display: flex; flex-wrap: wrap; gap: 5px; }
