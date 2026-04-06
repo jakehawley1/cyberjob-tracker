@@ -1,0 +1,28 @@
+.panel { padding: 1.25rem; }
+.header { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; margin-bottom: 1rem; }
+.title { font-size: 15px; font-weight: 600; }
+.subtitle { font-size: 13px; color: var(--text2); margin-top: 2px; }
+.actions { display: flex; gap: 6px; flex-wrap: wrap; flex-shrink: 0; }
+.section { margin-bottom: 1rem; }
+.statusRow { display: flex; flex-wrap: wrap; gap: 5px; }
+.sBadge { padding: 3px 10px; font-size: 12px; border-radius: 20px; border: 0.5px solid var(--border2); background: var(--bg2); color: var(--text2); cursor: pointer; }
+.sBadge:hover { border-color: var(--text2); color: var(--text); }
+.sCur { font-weight: 600; border-color: var(--text2); color: var(--text); background: var(--bg3); }
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 16px; margin-bottom: 1rem; font-size: 13px; }
+.drow { display: flex; flex-direction: column; gap: 3px; }
+.tags { display: flex; flex-wrap: wrap; gap: 5px; }
+.notes { font-size: 13px; line-height: 1.6; color: var(--text2); white-space: pre-wrap; background: var(--bg2); border-radius: var(--radius); padding: 10px 12px; }
+.timeline { display: flex; flex-direction: column; gap: 6px; }
+.tlItem { display: flex; gap: 10px; align-items: flex-start; font-size: 13px; }
+.tlDot { width: 8px; height: 8px; border-radius: 50%; background: var(--text3); flex-shrink: 0; margin-top: 4px; }
+.dot_applied { background: var(--blue); }
+.dot_interview { background: var(--teal); }
+.dot_finalist { background: var(--amber); }
+.dot_offer { background: var(--green); }
+.dot_rejected { background: var(--red); }
+.tlStatus { color: var(--text2); }
+.tlDate { font-size: 11px; color: var(--text3); margin-top: 1px; }
+.scorer { margin-top: 12px; display: flex; flex-direction: column; gap: 6px; }
+.scoreResult { margin-top: 10px; background: var(--bg2); border-radius: var(--radius); padding: 12px; }
+.scoreNum { font-size: 22px; font-weight: 700; margin-bottom: 6px; }
+.scoreFeedback { font-size: 13px; line-height: 1.6; color: var(--text2); white-space: pre-wrap; }

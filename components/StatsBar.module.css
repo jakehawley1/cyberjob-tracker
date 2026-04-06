@@ -1,0 +1,10 @@
+.bar { display: flex; gap: 1.25rem; align-items: center; flex-wrap: wrap; }
+.stat { display: flex; flex-direction: column; align-items: center; min-width: 40px; }
+.num { font-size: 20px; font-weight: 600; line-height: 1; }
+.lbl { font-size: 10px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 2px; }
+.blue { color: var(--blue); }
+.teal { color: var(--teal); }
+.amber { color: var(--amber); }
+.green { color: var(--green); }
+.red { color: var(--red); }
+.gray { color: var(--text2); }
